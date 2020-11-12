@@ -148,27 +148,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 在此处添加使用 hdc 的任何绘图代码...
-
-			Bigsquare Bigsquare(40, 40);
-			Bigsquare.squaresShow(hdc);
-
-			Stick Sitck(100, 100);
-			Sitck.squaresShow(hdc);
-
-			Z Z(100, 200);
-			Z.squaresShow(hdc);
-
-			S S(100, 300);
-			S.squaresShow(hdc);
-
-			L L(200, 100);
-			L.squaresShow(hdc);
-
-			J J(200, 200);
-			J.squaresShow(hdc);
-
-			T T(200,300);
-			T.squaresShow(hdc);
+			
+			
             EndPaint(hWnd, &ps);
         }
         break;

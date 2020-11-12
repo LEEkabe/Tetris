@@ -1,17 +1,20 @@
 #pragma once
 #include "firstWindowsProject.h"
 
+
 class Point {
 public:
 	Point(int x, int y) { X = x;Y = y; }
+	virtual ~Point(){}
 	virtual void squaresShow(HDC hdc) = 0;
+
 protected:
 	int X, Y;
 	const int a = 20, b = 21;
 };
 
 
-//Ìï
+//bigsquare
 class Bigsquare :public Point
 {
 public:
