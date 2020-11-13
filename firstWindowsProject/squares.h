@@ -44,7 +44,7 @@ public:
 	}
 };
 
-//z型
+//Z
 class Z :public Point
 {
 public:
@@ -60,7 +60,7 @@ public:
 };
 
 
-//s型
+//S
 class S :public Point
 {
 public:
@@ -78,7 +78,7 @@ public:
 
 
 
-//L型
+//L
 class L :public Point
 {
 public:
@@ -93,7 +93,7 @@ public:
 	}
 };
 
-//J型
+//J
 class J :public Point
 {
 public:
@@ -109,7 +109,7 @@ public:
 };
 
 
-//T型
+//T
 class T :public Point
 {
 public:

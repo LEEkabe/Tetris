@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "firstWindowsProject.h"
 #include"squares.h"
+#include <stdlib.h>
+#include<time.h>
 
 #define MAX_LOADSTRING 100
 
@@ -148,8 +150,52 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 在此处添加使用 hdc 的任何绘图代码...
-			
-			
+			int i = 0;
+			Point *p;
+			srand((unsigned)time(NULL));
+			for (int k = 0;k < 10;k++)
+			{
+				i = (rand() % (7 - 2)) + 1;
+				switch (i)
+				{
+				case 1:
+					p = new Bigsquare(40, 40);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				case 2:
+					p = new Stick(100, 60);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				case 3:
+					p = new Z(160, 80);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				case 4:
+					p = new S(220, 120);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				case 5:
+					p = new L(260, 180);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				case 6:
+					p = new J(300, 200);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				case 7:
+					p = new T(360, 260);
+					p->squaresShow(hdc);
+					delete p;
+					break;
+				}
+			}
+		
             EndPaint(hWnd, &ps);
         }
         break;
