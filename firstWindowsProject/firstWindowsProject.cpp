@@ -16,7 +16,8 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
 Point *p;
 bool squares = true;//一个控制draw的开关
-
+int i = 0;//标记方块
+int type = 1;//旋转之后的类型
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -165,10 +166,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 			p->fall(hdc);
-
-
-
-
 		EndPaint(hWnd, &ps);
 	}
 	break;
@@ -200,6 +197,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		p->down(hdc);
 	}
 	break;
+	case VK_RETURN:
+		type = p->changeType(type);
+		break;
 	default:
 		break;
 	}
@@ -215,7 +215,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		HDC hdc = GetDC(hWnd);
 		InvalidateRect(hWnd, NULL, TRUE);
 		UpdateWindow(hWnd);
-		//p->squaresShow(hdc);
+		p->squaresShow(hdc,type);
 	}
 		break;
 	
@@ -230,39 +230,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void draw(HDC hdc)
 {
 	
-	int i = 0;
+	
 		srand((unsigned)time(NULL));
 		i = (rand() % (7 - 2)) + 1;
 		switch (i)
 		{
 		case 1:
 			p = new Bigsquare(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			
 			break;
 		case 2:
 			p = new Stick(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			break;
 		case 3:
 			p = new Z(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			break;
 		case 4:
 			p = new S(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			break;
 		case 5:
 			p = new L(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			break;
 		case 6:
 			p = new J(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			break;
 		case 7:
 			p = new T(400, 50);
-			p->squaresShow(hdc);
+			p->squaresShow(hdc,type);
 			break;
 		}
 	
@@ -288,3 +288,4 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
