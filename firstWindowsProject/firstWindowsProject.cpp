@@ -171,6 +171,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		EndPaint(hWnd, &ps);
 	}
+	break;
+	case WM_KEYDOWN:
+		switch(wParam)
+	{
 	case VK_RIGHT:
 	{
 		HDC hdc = GetDC(hWnd);
@@ -187,6 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		HDC hdc = GetDC(hWnd);
 		p->up(hdc);
+		
 	}
 	break;
 	case VK_DOWN:
@@ -195,19 +200,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		p->down(hdc);
 	}
 	break;
+	default:
+		break;
+	}
+		break;
     case WM_DESTROY:
 		KillTimer(hWnd, 1);
 		DeleteObject(hbrush);
 		delete p;
         PostQuitMessage(0);
         break;
-	
 	case WM_TIMER:
-		
+	{
+		HDC hdc = GetDC(hWnd);
 		InvalidateRect(hWnd, NULL, TRUE);
-		GetUpdateRect(hWnd, NULL, TRUE);
 		UpdateWindow(hWnd);
+		//p->squaresShow(hdc);
+	}
 		break;
+	
 	
 	
     default:

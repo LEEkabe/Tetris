@@ -40,23 +40,29 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 			
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+		
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+		
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+		
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
 protected:
 	int x, y;
@@ -83,23 +89,29 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+		
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+		
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+		
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
 protected:
 	int x, y;
@@ -126,24 +138,31 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
+	
 
 protected:
 	int x, y;
@@ -171,24 +190,31 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
+	
 
 protected:
 	int x, y;
@@ -218,24 +244,31 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
+	
 
 protected:
 	int x, y;
@@ -262,24 +295,31 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
+	
 
 protected:
 	int x, y;
@@ -307,23 +347,29 @@ public:
 			squaresShow(hdc);
 		}
 		else
-			return;
+			squaresShow(hdc);
 
 	}
 	void right(HDC hdc) {
 		X = X + 20;
-		squaresShow(hdc);
+
 	}
 	void left(HDC hdc) {
 		X = X - 20;
-		squaresShow(hdc);
+
 	}
 	void down(HDC hdc) {
 		Y = Y + 40;
-		squaresShow(hdc);
+
 	}
 	void up(HDC hdc) {
-		falling = false;
+		if (falling == true)
+		{
+			Y = Y;
+			falling = false;
+		}
+		else
+			Y = Y;
 	}
 
 protected:
