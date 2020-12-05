@@ -35,6 +35,9 @@
     <ClCompile Include="firstWindowsProject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="squares.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="firstWindowsProject.rc">

@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="firstWindowsProject.cpp" />
+    <ClCompile Include="squares.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="firstWindowsProject.rc" />

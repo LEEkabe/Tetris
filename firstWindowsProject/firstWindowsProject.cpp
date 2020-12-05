@@ -8,7 +8,7 @@
 #include<time.h>
 #define  TIMER1 timer
 #define MAX_LOADSTRING 100
-#define BOTTOM 600
+
 void draw(HDC hdc);//drawing squares
 // 全局变量:
 HINSTANCE hInst;                                // 当前实例
@@ -18,6 +18,7 @@ Point *p;
 bool squares = true;//一个控制draw的开关
 int i = 0;//标记方块
 int type = 1;//旋转之后的类型
+
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -105,7 +106,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_EX_LAYERED | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-      CW_USEDEFAULT, 0, 1000, 600, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 1000, 700, nullptr, nullptr, hInstance, nullptr);
    SetTimer(hWnd, 1, 1000, NULL);
    if (!hWnd)
    {
@@ -158,6 +159,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// TODO: 在此处添加使用 hdc 的任何绘图代码...
 
+		
+
 		if (squares == true)
 		{
 			draw(hdc);
@@ -166,6 +169,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 			p->fall(hdc);
+
+		for (int i = 0; i < 32; i++)
+		{
+			static int  y = 0, x = 20;
+			theLine(hdc, y,x);
+			y = (y == 620) ? y = 0 : y = y + 20;
+			x = (x == 600) ? x = 0 : x = x + 20;
+		}
 		EndPaint(hWnd, &ps);
 	}
 	break;
@@ -213,9 +224,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 	{
 		HDC hdc = GetDC(hWnd);
+		
 		InvalidateRect(hWnd, NULL, TRUE);
+		GetUpdateRect(hWnd, NULL, TRUE);
 		UpdateWindow(hWnd);
 		p->squaresShow(hdc,type);
+		
 	}
 		break;
 	
@@ -236,32 +250,32 @@ void draw(HDC hdc)
 		switch (i)
 		{
 		case 1:
-			p = new Bigsquare(400, 50);
+			p = new Bigsquare(300, 50);
 			p->squaresShow(hdc,type);
 			
 			break;
 		case 2:
-			p = new Stick(400, 50);
+			p = new Stick(300, 50);
 			p->squaresShow(hdc,type);
 			break;
 		case 3:
-			p = new Z(400, 50);
+			p = new Z(300, 50);
 			p->squaresShow(hdc,type);
 			break;
 		case 4:
-			p = new S(400, 50);
+			p = new S(300, 50);
 			p->squaresShow(hdc,type);
 			break;
 		case 5:
-			p = new L(400, 50);
+			p = new L(300, 50);
 			p->squaresShow(hdc,type);
 			break;
 		case 6:
-			p = new J(400, 50);
+			p = new J(300, 50);
 			p->squaresShow(hdc,type);
 			break;
 		case 7:
-			p = new T(400, 50);
+			p = new T(300, 50);
 			p->squaresShow(hdc,type);
 			break;
 		}

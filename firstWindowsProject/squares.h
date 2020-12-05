@@ -3,6 +3,8 @@
 #define BLUE_COLOR  RGB(0,0,255)
 HBRUSH hbrush = CreateSolidBrush(BLUE_COLOR);
 bool falling = false;
+
+
 class Point {
 public:
 	Point(int x, int y) { X = x;Y = y; }
@@ -13,6 +15,7 @@ public:
 	virtual void left(HDC hdc) = 0;
 	virtual void up(HDC hdc) = 0;
 	virtual void down(HDC hdc) = 0;
+
 	int changeType(int type) {
 		type = (type == 4) ? type - 3 : type + 1;
 		return type;
@@ -22,6 +25,14 @@ protected:
 	const int a = 20, b = 21;
 };
 
+//…Ë∂®±ﬂΩÁ
+void theLine(HDC hdc,int y,int x) {
+		SelectObject(hdc, hbrush);
+		Rectangle(hdc, 0, y, 21, y + 21);
+		Rectangle(hdc, 620, y, 620+21, y + 21);
+		Rectangle(hdc, x, 620, x + 21, 620+21);
+		
+}
 
 //bigsquare
 class Bigsquare :public Point
@@ -36,24 +47,59 @@ public:
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X + a, Y, X + b + a, Y + b);
 			Rectangle(hdc, X + a, Y + a, X + b + a, Y + b + a);
+			
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-			Y = Y + 20;
+		if (falling == true) {
+			if (Y+40==580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y =Y + 20;
+			}
+		}
+			
 		else
 			return;
 			
 	}
 	void right(HDC hdc) {
-		X = X + 20;
+		if (X==580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X +20;
+		}
 		
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-		
+		if (X==20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
+		if (Y+40==580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y= Y + 40;
+		}
 		
 	}
 	void up(HDC hdc) {
@@ -84,6 +130,7 @@ public:
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X, Y + 2 * a, X + b, Y + b + 2 * a);
 			Rectangle(hdc, X, Y + 3 * a, X + b, Y + b + 3 * a);
+			
 		}
 		else
 		{
@@ -91,26 +138,61 @@ public:
 			Rectangle(hdc, X+a, Y , X + b+a, Y + b );
 			Rectangle(hdc, X + 2 * a, Y , X + b + 2 * a, Y + b );
 			Rectangle(hdc, X + 3 * a, Y , X + b + 3 * a, Y + b );
+		
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-			Y = Y + 20;
+		if (falling == true) {
+			if (Y +40== 580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y = Y + 20;
+			}
+		}
+
 		else
 			return;
 
 	}
 	void right(HDC hdc) {
-		X = X + 20;
-		
+		if (X == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X + 20;
+		}
+
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-		
+		if (X == 20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
-		
+		if (Y+40 == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y = Y + 40;
+		}
+
 	}
 	void up(HDC hdc) {
 		if (falling == true)
@@ -140,6 +222,7 @@ public:
 			Rectangle(hdc, X + a, Y, X + b + a, Y + b);
 			Rectangle(hdc, X + a, Y + a, X + b + a, Y + b + a);
 			Rectangle(hdc, X + 2 * a, Y + a, X + b + 2 * a, Y + b + a);
+			
 		}
 		else
 		{
@@ -147,25 +230,61 @@ public:
 			Rectangle(hdc, X , Y + a, X + b , Y + b + a);
 			Rectangle(hdc, X + a, Y , X + b + a, Y + b );
 			Rectangle(hdc, X +  a, Y - a, X + b + a, Y + b - a);
+			
+
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-			Y = Y + 20;
+		if (falling == true) {
+			if (Y + 40 == 580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y = Y + 20;
+			}
+		}
+
 		else
 			return;
 
 	}
 	void right(HDC hdc) {
-		X = X + 20;
+		if (X == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X + 20;
+		}
 
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-
+		if (X == 20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
+		if (Y + 40 == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y = Y + 40;
+		}
 
 	}
 	void up(HDC hdc) {
@@ -199,6 +318,7 @@ public:
 			Rectangle(hdc, X + 2 * a, Y, X + b + 2 * a, Y + b);
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X + a, Y + a, X + b + a, Y + b + a);
+			
 		}
 		else
 		{
@@ -206,28 +326,60 @@ public:
 			Rectangle(hdc, X + a, Y+2*a, X + b +  a, Y + b+2*a);
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X + a, Y + a, X + b + a, Y + b + a);
+			
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-		{
-			Y = Y + 20;
-
+		if (falling == true) {
+			if (Y + 40 == 580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y = Y + 20;
+			}
 		}
+
 		else
 			return;
 
 	}
 	void right(HDC hdc) {
-		X = X + 20;
+		if (X == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X + 20;
+		}
 
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-
+		if (X == 20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
+		if (Y + 40 == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y = Y + 40;
+		}
 
 	}
 	void up(HDC hdc) {
@@ -264,49 +416,84 @@ public:
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X, Y + 2 * a, X + b, Y + b + 2 * a);
 			Rectangle(hdc, X + a, Y + 2 * a, X + b + a, Y + b + 2 * a);
+			
 			break;
 		case 2:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X +  a, Y , X + b + a, Y + b );
 			Rectangle(hdc, X +2*a, Y , X + b+2*a , Y + b );
+		
 			break;
 		case 3:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X+a, Y , X + b+a, Y + b );
 			Rectangle(hdc, X+a, Y +  a, X + b+a, Y + b +  a);
 			Rectangle(hdc, X + a, Y + 2 * a, X + b + a, Y + b + 2 * a);
+		
 			break;
 		case 4:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X+a, Y , X + b+a, Y + b );
 			Rectangle(hdc, X+2*a, Y , X + b + 2 * a, Y + b );
 			Rectangle(hdc, X +2* a, Y - a, X + b +2* a, Y + b - a);
+			
 			break;
 		default:
 			break;
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-		{
-			Y = Y + 20;
-
+		if (falling == true) {
+			if (Y + 40 == 580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y = Y + 20;
+			}
 		}
+
 		else
 			return;
 
 	}
 	void right(HDC hdc) {
-		X = X + 20;
+		if (X == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X + 20;
+		}
 
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-
+		if (X == 20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
+		if (Y + 40 == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y = Y + 40;
+		}
 
 	}
 	void up(HDC hdc) {
@@ -340,49 +527,84 @@ public:
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X, Y + 2 * a, X + b, Y + b + 2 * a);
 			Rectangle(hdc, X - a, Y + 2 * a, X + b - a, Y + b + 2 * a);
+			
 			break;
 		case 2:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X+a, Y +  a, X + b, Y + b +  a);
 			Rectangle(hdc, X +2* a, Y + a, X + b +2*a, Y + b +  a);
+			
 			break;
 		case 3:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X + a, Y , X + b+a, Y + b );
 			Rectangle(hdc, X, Y +  a, X + b, Y + b +  a);
 			Rectangle(hdc, X , Y + 2 * a, X + b , Y + b + 2 * a);
+			
 			break;
 		case 4:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X + a, Y, X + b + a, Y + b);
 			Rectangle(hdc, X+2*a, Y, X + b+2*a, Y + b);
 			Rectangle(hdc, X+2*a, Y +  a, X + b+2*a, Y + b +  a);
+			
 			break;
 		default:
 			break;
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-		{
-			Y = Y + 20;
-
+		if (falling == true) {
+			if (Y + 40 == 580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y = Y + 20;
+			}
 		}
+
 		else
 			return;
 
 	}
 	void right(HDC hdc) {
-		X = X + 20;
+		if (X == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X + 20;
+		}
 
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-
+		if (X == 20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
+		if (Y + 40 == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y = Y + 40;
+		}
 
 	}
 	void up(HDC hdc) {
@@ -417,49 +639,84 @@ public:
 			Rectangle(hdc, X + a, Y, X + b + a, Y + b);
 			Rectangle(hdc, X + 2 * a, Y, X + b + 2 * a, Y + b);
 			Rectangle(hdc, X + a, Y + a, X + b + a, Y + b + a);
+			
 			break;
 		case 2:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X , Y+a, X + b , Y + b+a);
 			Rectangle(hdc, X , Y+2*a, X + b , Y + b+2*a);
 			Rectangle(hdc, X - a, Y + a, X + b - a, Y + b + a);
+			
 			break;
 		case 3:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X+a, Y, X + b+a, Y + b);
 			Rectangle(hdc, X + 2 * a, Y , X + b + 2 * a, Y + b );
 			Rectangle(hdc, X + a, Y -a, X + b +a, Y + b - a);
+			
 			break;
 		case 4:
 			Rectangle(hdc, X, Y, X + b, Y + b);
 			Rectangle(hdc, X, Y + a, X + b, Y + b + a);
 			Rectangle(hdc, X, Y + 2 * a, X + b, Y + b + 2 * a);
 			Rectangle(hdc, X + a, Y + a, X + b + a, Y + b + a);
+			
 			break;
 		default:
 			break;
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true)
-		{
-			Y = Y + 20;
-
+		if (falling == true) {
+			if (Y + 40 == 580)
+			{
+				X = X;
+				Y = Y;
+				falling = false;
+			}
+			else
+			{
+				Y = Y + 20;
+			}
 		}
+
 		else
 			return;
 
 	}
 	void right(HDC hdc) {
-		X = X + 20;
+		if (X == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X + 20;
+		}
 
 	}
 	void left(HDC hdc) {
-		X = X - 20;
-
+		if (X == 20)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			X = X - 20;
+		}
 	}
 	void down(HDC hdc) {
-		Y = Y + 40;
+		if (Y + 40 == 580)
+		{
+			X = X;
+			Y = Y;
+		}
+		else
+		{
+			Y = Y + 40;
+		}
 
 	}
 	void up(HDC hdc) {
