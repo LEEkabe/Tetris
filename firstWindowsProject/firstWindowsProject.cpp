@@ -6,13 +6,16 @@
 #include"squares.h"
 #include <stdlib.h>
 #include<time.h>
-
+#define  TIMER1 timer
 #define MAX_LOADSTRING 100
-
+#define BOTTOM 600
+void draw(HDC hdc);//drawing squares
 // 全局变量:
 HINSTANCE hInst;                                // 当前实例
 WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
+Point *p;
+bool squares = true;//一个控制draw的开关
 
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -44,14 +47,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FIRSTWINDOWSPROJECT));
 
     MSG msg;
-
+	
     // 主消息循环:
     while (GetMessage(&msg, nullptr, 0, 0))
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            TranslateMessage(&msg);//将消息处理一下
+            DispatchMessage(&msg);//将消息交给Windows处理
         }
     }
 
@@ -100,9 +103,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_EX_LAYERED | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_EX_LAYERED | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
       CW_USEDEFAULT, 0, 1000, 600, nullptr, nullptr, hInstance, nullptr);
-
+   SetTimer(hWnd, 1, 1000, NULL);
    if (!hWnd)
    {
       return FALSE;
@@ -113,6 +116,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    return TRUE;
 }
+
+
 
 //
 //  函数: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -126,87 +131,132 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)
-    {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 分析菜单选择:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 在此处添加使用 hdc 的任何绘图代码...
-			int i = 0;
-			Point *p;
-			srand((unsigned)time(NULL));
-			for (int k = 0;k < 10;k++)
-			{
-				i = (rand() % (7 - 2)) + 1;
-				switch (i)
-				{
-				case 1:
-					p = new Bigsquare(40, 40);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				case 2:
-					p = new Stick(100, 60);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				case 3:
-					p = new Z(160, 80);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				case 4:
-					p = new S(220, 120);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				case 5:
-					p = new L(260, 180);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				case 6:
-					p = new J(300, 200);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				case 7:
-					p = new T(360, 260);
-					p->squaresShow(hdc);
-					delete p;
-					break;
-				}
-			}
-		
-            EndPaint(hWnd, &ps);
-        }
-        break;
+	
+	switch (message)
+	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		// 分析菜单选择:
+		switch (wmId)
+		{
+		case IDM_ABOUT:
+			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			break;
+		case IDM_EXIT:
+			DestroyWindow(hWnd);
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+	}
+	break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
+		// TODO: 在此处添加使用 hdc 的任何绘图代码...
+
+		if (squares == true)
+		{
+			draw(hdc);
+			squares = false;
+			falling = true;
+		}
+		else
+			p->fall(hdc);
+
+
+
+
+		EndPaint(hWnd, &ps);
+	}
+	case VK_RIGHT:
+	{
+		HDC hdc = GetDC(hWnd);
+		p->right(hdc);
+	}
+	break;
+	case VK_LEFT:
+	{
+		HDC hdc = GetDC(hWnd);
+		p->left(hdc);
+	}
+	break;
+	case VK_UP:
+	{
+		HDC hdc = GetDC(hWnd);
+		p->up(hdc);
+	}
+	break;
+	case VK_DOWN:
+	{
+		HDC hdc = GetDC(hWnd);
+		p->down(hdc);
+	}
+	break;
     case WM_DESTROY:
+		KillTimer(hWnd, 1);
+		DeleteObject(hbrush);
+		delete p;
         PostQuitMessage(0);
         break;
+	
+	case WM_TIMER:
+		
+		InvalidateRect(hWnd, NULL, TRUE);
+		GetUpdateRect(hWnd, NULL, TRUE);
+		UpdateWindow(hWnd);
+		break;
+	
+	
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
 }
+
+void draw(HDC hdc)
+{
+	
+	int i = 0;
+		srand((unsigned)time(NULL));
+		i = (rand() % (7 - 2)) + 1;
+		switch (i)
+		{
+		case 1:
+			p = new Bigsquare(400, 50);
+			p->squaresShow(hdc);
+			
+			break;
+		case 2:
+			p = new Stick(400, 50);
+			p->squaresShow(hdc);
+			break;
+		case 3:
+			p = new Z(400, 50);
+			p->squaresShow(hdc);
+			break;
+		case 4:
+			p = new S(400, 50);
+			p->squaresShow(hdc);
+			break;
+		case 5:
+			p = new L(400, 50);
+			p->squaresShow(hdc);
+			break;
+		case 6:
+			p = new J(400, 50);
+			p->squaresShow(hdc);
+			break;
+		case 7:
+			p = new T(400, 50);
+			p->squaresShow(hdc);
+			break;
+		}
+	
+}
+
 
 // “关于”框的消息处理程序。
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
