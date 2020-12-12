@@ -9,6 +9,7 @@
 #define  TIMER1 timer
 #define MAX_LOADSTRING 100
 
+void drawTheLine(HDC hdc);
 void draw(HDC hdc);//drawing squares
 // 全局变量:
 HINSTANCE hInst;                                // 当前实例
@@ -158,9 +159,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// TODO: 在此处添加使用 hdc 的任何绘图代码...
-
 		
-
+		drawTheLine(hdc);
+		inMap();
+		//画图和判断是否下落
 		if (squares == true)
 		{
 			draw(hdc);
@@ -169,14 +171,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 			p->fall(hdc);
+	   
 
-		for (int i = 0; i < 32; i++)
-		{
-			static int  y = 0, x = 20;
-			theLine(hdc, y,x);
-			y = (y == 620) ? y = 0 : y = y + 20;
-			x = (x == 600) ? x = 0 : x = x + 20;
-		}
+
+
+
+
+
+
 		EndPaint(hWnd, &ps);
 	}
 	break;
@@ -186,13 +188,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case VK_RIGHT:
 	{
 		HDC hdc = GetDC(hWnd);
-		p->right(hdc);
+		p->check();
+		
+		if (num==1)
+			p->right(hdc);
 	}
 	break;
 	case VK_LEFT:
 	{
 		HDC hdc = GetDC(hWnd);
-		p->left(hdc);
+		p->check();
+		if (num==1)
+			p->left(hdc);
 	}
 	break;
 	case VK_UP:
@@ -205,10 +212,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case VK_DOWN:
 	{
 		HDC hdc = GetDC(hWnd);
-		p->down(hdc);
+		
+		p->check();
+		if (num==1)
+			p->down(hdc);
+		
 	}
 	break;
 	case VK_RETURN:
+		p->check();
+		if(num==1)
 		type = p->changeType(type);
 		break;
 	default:
@@ -303,3 +316,14 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)FALSE;
 }
 
+void drawTheLine(HDC hdc) {
+	for (int i = 0; i < 32; i++)
+	{
+		static int  y = 0, x = 20;
+		theLine(hdc, y, x);
+		y = (y == 600) ? y = 0 : y = y + 20;
+		x = (x == 620) ? x = 0 : x = x + 20;
+
+	}
+
+}

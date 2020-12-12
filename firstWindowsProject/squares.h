@@ -1,10 +1,11 @@
 #pragma once
 #include "firstWindowsProject.h"
 #define BLUE_COLOR  RGB(0,0,255)
+
 HBRUSH hbrush = CreateSolidBrush(BLUE_COLOR);
 bool falling = false;
-
-
+int map[640][620] = { 0 };
+int num ;
 class Point {
 public:
 	Point(int x, int y) { X = x;Y = y; }
@@ -15,7 +16,7 @@ public:
 	virtual void left(HDC hdc) = 0;
 	virtual void up(HDC hdc) = 0;
 	virtual void down(HDC hdc) = 0;
-
+	virtual bool check() = 0;
 	int changeType(int type) {
 		type = (type == 4) ? type - 3 : type + 1;
 		return type;
@@ -25,15 +26,12 @@ protected:
 	const int a = 20, b = 21;
 };
 
-//设定边界
-void theLine(HDC hdc,int y,int x) {
-		SelectObject(hdc, hbrush);
-		Rectangle(hdc, 0, y, 21, y + 21);
-		Rectangle(hdc, 620, y, 620+21, y + 21);
-		Rectangle(hdc, x, 620, x + 21, 620+21);
-		
-}
 
+//
+//
+//基本功能实现（画方块、上下左右移动、自动下落等）
+//
+//
 //bigsquare
 class Bigsquare :public Point
 {
@@ -50,57 +48,29 @@ public:
 			
 	}
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y+40==580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y =Y + 20;
-			}
+		check();
+		if (falling == true && (num == 1 || num == -1)) {
+
+			Y = Y + 20;
 		}
-			
+
 		else
 			return;
-			
 	}
 	void right(HDC hdc) {
-		if (X==580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X +20;
-		}
-		
+
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X==20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y+40==580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y= Y + 40;
-		}
-		
+
+		Y = Y + 40;
+
+
 	}
 	void up(HDC hdc) {
 		if (falling == true)
@@ -110,6 +80,15 @@ public:
 		}
 		else
 			Y = Y;
+	}
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1)return num = 0;
+
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num = 0;
+		else
+			return num = 1;
 	}
 protected:
 	int x, y;
@@ -142,56 +121,28 @@ public:
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y +40== 580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y = Y + 20;
-			}
+		check();
+		if (falling == true && (num == 1 || num == -1)) {
+
+			Y = Y + 20;
 		}
 
 		else
 			return;
-
 	}
 	void right(HDC hdc) {
-		if (X == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X + 20;
-		}
 
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X == 20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y+40 == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y = Y + 40;
-		}
+
+		Y = Y + 40;
+
 
 	}
 	void up(HDC hdc) {
@@ -202,6 +153,15 @@ public:
 		}
 		else
 			Y = Y;
+	}
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1)return num = 0;
+
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num = 0;
+		else
+			return num = 1;
 	}
 protected:
 	int x, y;
@@ -234,57 +194,30 @@ public:
 
 		}
 	}
+	
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y + 40 == 580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y = Y + 20;
-			}
+		check();
+		if (falling == true&&(num==1||num==-1)) {
+
+			Y = Y + 20;
 		}
 
 		else
 			return;
-
 	}
 	void right(HDC hdc) {
-		if (X == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X + 20;
-		}
 
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X == 20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y + 40 == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y = Y + 40;
-		}
+
+		Y = Y + 40;
+
 
 	}
 	void up(HDC hdc) {
@@ -296,8 +229,15 @@ public:
 		else
 			Y = Y;
 	}
-	
-
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1 )return num=0;
+		
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num=0;
+		else
+			return num=1;
+	}
 protected:
 	int x, y;
 };
@@ -329,57 +269,30 @@ public:
 			
 		}
 	}
+	
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y + 40 == 580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y = Y + 20;
-			}
+		check();
+		if (falling == true && (num == 1 || num == -1)) {
+
+			Y = Y + 20;
 		}
 
 		else
 			return;
-
 	}
 	void right(HDC hdc) {
-		if (X == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X + 20;
-		}
 
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X == 20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y + 40 == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y = Y + 40;
-		}
+
+		Y = Y + 40;
+
 
 	}
 	void up(HDC hdc) {
@@ -391,8 +304,15 @@ public:
 		else
 			Y = Y;
 	}
-	
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1)return num = 0;
 
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num = 0;
+		else
+			return num = 1;
+	}
 protected:
 	int x, y;
 };
@@ -443,57 +363,30 @@ public:
 			break;
 		}
 	}
+	
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y + 40 == 580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y = Y + 20;
-			}
+		check();
+		if (falling == true && (num == 1 || num == -1)) {
+
+			Y = Y + 20;
 		}
 
 		else
 			return;
-
 	}
 	void right(HDC hdc) {
-		if (X == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X + 20;
-		}
 
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X == 20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y + 40 == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y = Y + 40;
-		}
+
+		Y = Y + 40;
+
 
 	}
 	void up(HDC hdc) {
@@ -505,8 +398,15 @@ public:
 		else
 			Y = Y;
 	}
-	
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1)return num = 0;
 
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num = 0;
+		else
+			return num = 1;
+	}
 protected:
 	int x, y;
 };
@@ -555,56 +455,28 @@ public:
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y + 40 == 580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y = Y + 20;
-			}
+		check();
+		if (falling == true && (num == 1 || num == -1)) {
+
+			Y = Y + 20;
 		}
 
 		else
 			return;
-
 	}
 	void right(HDC hdc) {
-		if (X == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X + 20;
-		}
 
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X == 20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y + 40 == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y = Y + 40;
-		}
+
+		Y = Y + 40;
+
 
 	}
 	void up(HDC hdc) {
@@ -616,8 +488,15 @@ public:
 		else
 			Y = Y;
 	}
-	
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1)return num = 0;
 
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num = 0;
+		else
+			return num = 1;
+	}
 protected:
 	int x, y;
 };
@@ -667,56 +546,28 @@ public:
 		}
 	}
 	void  fall(HDC hdc) {
-		if (falling == true) {
-			if (Y + 40 == 580)
-			{
-				X = X;
-				Y = Y;
-				falling = false;
-			}
-			else
-			{
-				Y = Y + 20;
-			}
+		check();
+		if (falling == true && (num == 1 || num == -1)) {
+
+			Y = Y + 20;
 		}
 
 		else
 			return;
-
 	}
 	void right(HDC hdc) {
-		if (X == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X + 20;
-		}
 
+		X = X + 20;
 	}
 	void left(HDC hdc) {
-		if (X == 20)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			X = X - 20;
-		}
+
+		X = X - 20;
+
 	}
 	void down(HDC hdc) {
-		if (Y + 40 == 580)
-		{
-			X = X;
-			Y = Y;
-		}
-		else
-		{
-			Y = Y + 40;
-		}
+
+		Y = Y + 40;
+
 
 	}
 	void up(HDC hdc) {
@@ -728,8 +579,52 @@ public:
 		else
 			Y = Y;
 	}
+	bool check() {
+		if (map[X + 20][Y] == 1 || map[X - 20][Y] == 1)return num = 0;
 
+		if (map[X][Y + 20] == 0 && map[X][Y + 40] == 1)return num = -1;
+		if (map[X][Y + 20] == 1 || map[X][Y + 40] == 1)return num = 0;
+		if (map[X + 40][Y] == 1 && map[X][Y + 40] == 1)return num = 0;
+		else
+			return num = 1;
+	}
 protected:
 	int x, y;
 };
+
+
+void theLine(HDC hdc, int y, int x) {
+	SelectObject(hdc, hbrush);
+	Rectangle(hdc, 0, y, 21, y + 21);
+	Rectangle(hdc, 620, y, 620 + 21, y + 21);
+	Rectangle(hdc, x, 620, x + 21, 620 + 21);
+
+}
+
+
+
+	
+	void inMap() {
+		for (int i = 0;i < 640;i++) {
+			for (int j = 0; j < 620; j++)
+			{
+				if (j>=600)
+				{
+					map[i][j] = 1;
+				}
+				else if (i==20||i==620)
+				{
+					map[i][j] = 1;
+				}
+				else
+				{
+					map[i][j] = 0;
+				}
+			}
+		}
+		return;
+	}
+	
+
+
 
